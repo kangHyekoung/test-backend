@@ -10,4 +10,10 @@ public class UserController {
 		return "index";
 	}
 	
+	
+	@GetMapping(value = "/select")
+	public String getList() {
+		return "index";
+	}
+	
 }
