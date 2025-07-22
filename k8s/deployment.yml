@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: springboot-app
-        image: ${{ secrets.AWS_ECR_PRIVATE_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_PRIVATE_REPOSITORY }}:latest 
+        image: 061039800008.dkr.ecr.ap-northeast-2.amazonaws.com/lion-frontend/lion-backend:latest
         ports:
         - containerPort: 8080
         env:
