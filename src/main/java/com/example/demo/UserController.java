@@ -16,4 +16,10 @@ public class UserController {
 		return "index";
 	}
 	
+	@GetMapping(value = "/complate")
+	public String save() {
+		return "index";
+	}
+	
+	
 }
