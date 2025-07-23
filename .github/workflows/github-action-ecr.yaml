@@ -68,3 +68,29 @@ jobs:
       - name: Push Docker image to Amazon ECR
         run: |
           docker push ${{ secrets.AWS_ECR_PRIVATE_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_PRIVATE_REPOSITORY }}:latest
+      - name: Update deployment.yaml
+        run: |
+          # deployment.yaml에서 IMAGE_URI를 실제 이미지로 치환
+          sed -i "s|IMAGE_URI|${{ secrets.AWS_ECR_PRIVATE_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_PRIVATE_REPOSITORY }}:${{ env.SHORT_SHA }}|g" k8s/deployment.yaml
+          
+          # 변경사항 확인
+          echo "✅ deployment.yaml updated:"
+          grep "image:" k8s/deployment.yaml
+          
+      - name: Commit and push changes
+        run: |
+          # Git 설정
+          git config --local user.email ${{ secrets.GIT_EMAIL }}
+          git config --local user.name ${{ secrets.GIT_NAME }}
+          
+          # deployment.yaml 변경사항 추가
+          git add k8s/deployment.yaml
+          
+          # 커밋 (변경사항이 있을 때만)
+          if git diff --staged --quiet; then
+            echo "변강사항 없음"
+          else
+            git commit -m "Update image to ${{ env.SHORT_SHA }}"
+            git push
+            echo "업데이트완료"
+          fi  
