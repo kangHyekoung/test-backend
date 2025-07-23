@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: springboot-app
-        image: IMAGE_URI
+        image: 061039800008.dkr.ecr.ap-northeast-2.amazonaws.com/lion-frontend:9f2fa55
         ports:
         - containerPort: 8080
         env:
