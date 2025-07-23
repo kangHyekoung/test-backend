@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: springboot-app
-        image: #
+        image: IMAGE_URI
         ports:
         - containerPort: 8080
         env:
