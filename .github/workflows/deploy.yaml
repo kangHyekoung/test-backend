@@ -70,11 +70,10 @@ jobs:
           docker push ${{ secrets.AWS_ECR_PRIVATE_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_PRIVATE_REPOSITORY }}:latest
       - name: Update deployment.yaml
         run: |
-          # deployment.yaml에서 IMAGE_URI를 실제 이미지로 치환
           sed -i "s|IMAGE_URI|${{ secrets.AWS_ECR_PRIVATE_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_PRIVATE_REPOSITORY }}:${{ env.SHORT_SHA }}|g" k8s/deployment.yaml
           
           # 변경사항 확인
-          echo "✅ deployment.yaml updated:"
+          echo "deployment.yaml updated:"
           grep "image:" k8s/deployment.yaml
           
       - name: Commit and push changes
